@@ -1,0 +1,54 @@
+import pandas as pd
+
+# 데이터 읽기
+df = pd.read_csv('data.csv')                         # CSV 파일에서 데이터 로드
+df = pd.read_excel('data.xlsx')                      # Excel 파일에서 데이터 로드
+df = pd.read_sql('SELECT * FROM data', connection)   # SQL 데이터베이스에서 데이터 로드
+
+# 데이터 보기
+df.head(n=5)                              # 데이터의 첫 5개 행 보기 (n에는 보여줄 행 수 입력)
+df.tail(n=5)                              # 데이터의 마지막 5개 행 보기 (n에는 보여줄 행 수 입력)
+df.shape                                  # 데이터의 차원 보기
+df.columns                                # 데이터의 열 이름 보기
+df.info()                                 # 데이터 유형 및 각 열의 결측값 개수 보기
+df.describe()                             # 수치형 열의 요약 통계 보기
+
+# 선택
+df['column_name']                         # 이름으로 단일 열 선택
+df[['column_name_1', 'column_name_2']]    # 이름으로 다중 열 선택
+df.loc[row_indexer, column_indexer]       # 라벨 기반으로 일부 행과 열 선택
+df.iloc[row_indexer, column_indexer]      # 위치 기반으로 일부 행과 열 선택
+df.query('column_name > 5')               # 불린 인덱싱으로 일부 행 선택
+
+# 필터링
+df[df['column_name'] > 5]                                     # 단일 조건으로 행 필터링
+df[(df['column_name_1'] > 5) & (df['column_name_2'] < 10)]    # 다중 조건으로 행 필터링
+df[df['column_name'].isin(['value_1', 'value_2'])]            # 값 목록과 일치하는 행 필터링
+
+# 결측값 처리
+df.dropna()                                # 결측값이 있는 행 삭제
+df.fillna(value)                           # 결측값을 특정 값으로 채우기
+
+# 데이터 조작
+df.groupby('column_name').mean()                                              # 열을 기준으로 데이터 그룹화 및 각 그룹의 평균 계산
+df.pivot_table(values='value', index='index_column', columns='column_name')   # 데이터에서 피벗 테이블 생성
+df.melt(id_vars=['column_name_1'], value_vars=['column_name_2'])              # 데이터를 와이드 형식에서 롱 형식으로 변환
+
+# 데이터 병합
+pd.merge(left_df, right_df, on='column_name', how='inner')       # 공통 열을 기준으로 두 데이터프레임 병합
+pd.concat([df1, df2], axis=0)
+
+# 데이터 정렬
+df.sort_values(by='column_name', ascending=True, inplace=False)  # 하나 이상의 열로 데이터프레임 정렬
+df.sort_index(axis=0, ascending=True)                            # 인덱스를 기준으로 데이터프레임 정렬
+
+# 데이터 수정
+df.drop(columns='column_name', inplace=False)                    # 열 삭제
+df.rename(columns={'old_name': 'new_name'}, inplace=False)       # 열 이름 변경
+df.replace(to_replace='old_value', value='new_value')            # 특정 값 대체
+df['new_column'] = df['column_1'] + df['column_2']               # 열 추가
+
+# 데이터 저장
+df.to_csv('data.csv', index=False)                          # 데이터를 CSV 파일로 저장
+df.to_excel('data.xlsx', index=False)                       # 데이터를 Excel 파일로 저장
+df.to_sql('table_name', connection)                         # 데이터를 SQL 데이터베이스의 테이블로 저장
