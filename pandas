@@ -5,7 +5,7 @@ df = pd.read_csv('data.csv')                         # CSV 파일에서 데이�
 df = pd.read_excel('data.xlsx')                      # Excel 파일에서 데이터 로드
 df = pd.read_sql('SELECT * FROM data', connection)   # SQL 데이터베이스에서 데이터 로드
 
-# 데이터 보기
+# 데이터 확인
 df.head(n=5)                              # 데이터의 첫 5개 행 보기 (n에는 보여줄 행 수 입력)
 df.tail(n=5)                              # 데이터의 마지막 5개 행 보기 (n에는 보여줄 행 수 입력)
 df.shape                                  # 데이터의 차원 보기
@@ -28,11 +28,16 @@ df[df['column_name'].isin(['value_1', 'value_2'])]            # 값 목록과 �
 # 결측값 처리
 df.dropna()                                # 결측값이 있는 행 삭제
 df.fillna(value)                           # 결측값을 특정 값으로 채우기
+	# ex> df.fillna(000.median(), inplace= True) # 중앙 값으로 채우기
 
 # 데이터 조작
+pd.get_dummies('col_name', drop_first= True)                                  # 가변수화
+		# (컬럼을 지정하지 않으면, 오브젝트형 데이터를 모두 가변수화
 df.groupby('column_name').mean()                                              # 열을 기준으로 데이터 그룹화 및 각 그룹의 평균 계산
+		# ex> df.groupby(by= 'Title')['Age'].transform('median')			  # 그룹별 중앙값을 도출해서 그 값을 테이블로 돌려준다 시리즈의 형태로 넣어줘야 한다.
 df.pivot_table(values='value', index='index_column', columns='column_name')   # 데이터에서 피벗 테이블 생성
 df.melt(id_vars=['column_name_1'], value_vars=['column_name_2'])              # 데이터를 와이드 형식에서 롱 형식으로 변환
+
 
 # 데이터 병합
 pd.merge(left_df, right_df, on='column_name', how='inner')       # 공통 열을 기준으로 두 데이터프레임 병합
@@ -52,3 +57,17 @@ df['new_column'] = df['column_1'] + df['column_2']               # 열 추가
 df.to_csv('data.csv', index=False)                          # 데이터를 CSV 파일로 저장
 df.to_excel('data.xlsx', index=False)                       # 데이터를 Excel 파일로 저장
 df.to_sql('table_name', connection)                         # 데이터를 SQL 데이터베이스의 테이블로 저장
+
+
+
+
+
+# 기타 추가
+pd.set_option('display.precision', 2)							# 소수점 자리 설정            # 두가지 형태의 형식 참고
+pd.options.display.float_foramt= '{:.5f}'.format				# DataFrame 지수표현식 없애기
+pd.reset_option('display.float_format')							# 되돌리기
+
+pd.options.display.max_rows= 100								# row출력 최대치 조정
+pd.options.display.max_columns= 100								# columns출력 최대치 조정
+
+np.set_printoptions(precision= 6, suppress= True)				# np.array 지수표현식 없애기
