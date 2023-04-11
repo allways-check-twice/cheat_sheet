@@ -37,7 +37,7 @@ pd.get_dummies('col_name', drop_first= True)                                  # 
 df.groupby('column_name').mean()                                              # 열을 기준으로 데이터 그룹화 및 각 그룹의 평균 계산
 		# ex> df.groupby(by= 'Title')['Age'].transform('median')			  # 그룹별 중앙값을 도출해서 그 값을 테이블로 돌려준다 시리즈의 형태로 넣어줘야 한다.
 df.pivot_table(values='value', index='index_column', columns='column_name')   # 데이터에서 피벗 테이블 생성
-df.melt(id_vars=['column_name_1'], value_vars=['column_name_2'])              # 데이터를 와이드 형식에서 롱 형식으로 변환
+df.melt(id_vars=['column_name_1'], value_vars=['column_name_2'], var_name= col_name, value_name= val_name)              # 데이터를 와이드 형식에서 롱 형식으로 변환
 
 
 # 데이터 병합
