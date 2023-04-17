@@ -38,7 +38,9 @@ df.groupby('column_name').mean()                                              	#
 		# ex> df.groupby(by= 'Title')['Age'].transform('median')	# 그룹별 중앙값을 도출해서 그 값을 테이블로 돌려준다 시리즈의 형태로 넣어줘야 한다.
 df.pivot_table(values='value', index='index_column', columns='column_name')                                  # 데이터에서 피벗 테이블 생성
 df.melt(id_vars=['column_name_1'], value_vars=['column_name_2'], var_name= col_name, value_name= val_name)   # 데이터를 와이드 형식에서 롱 형식으로 변환
-
+						
+df[col] = pd.Categorical(df[col], categories=order_list, ordered=True) 		# dtype을 범주형으로 변경 
+									# order_list 순서대로 순서속성부여(범주형 기준으로 정렬하기위해 순서속성 부여)
 
 # 데이터 병합
 pd.merge(left_df, right_df, on='column_name', how='inner')       # 공통 열을 기준으로 두 데이터프레임 병합
